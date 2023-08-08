@@ -1,8 +1,6 @@
 package com.backend.controller;
 
 import com.backend.dto.LoginRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,8 +12,6 @@ import com.backend.service.JwtService;
 @RestController
 @RequestMapping("/demo")
 public class DemoController {
-
-    private static Logger log = LoggerFactory.getLogger(DemoController.class);
 
     @Autowired
     private JwtService jwtService;
