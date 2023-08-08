@@ -31,14 +31,11 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        var user = User.withUsername("user").password("1234")
-                .passwordEncoder(str -> passwordEncoder().encode(str))
-                .roles("USER").build();
         var admin = User.withUsername("admin").password("1234")
                 .passwordEncoder(str -> passwordEncoder().encode(str))
                 .roles("ADMIN").build();
 
-         return new InMemoryUserDetailsManager(admin, user);
+         return new InMemoryUserDetailsManager(admin);
     }
 
     @Bean
