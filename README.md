@@ -1,5 +1,6 @@
 # spring-security-jwt-demo
 ## prerequisites
+- Maven
 - Java 17
 
 ## run spring boot
