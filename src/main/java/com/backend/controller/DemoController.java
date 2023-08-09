@@ -1,7 +1,10 @@
 package com.backend.controller;
 
 import com.backend.dto.LoginRequest;
+import com.backend.dto.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,22 +23,22 @@ public class DemoController {
     private AuthenticationManager authenticationManager;
 
     @GetMapping("/hello")
-    public String hello() {
-        return "hello";
+    public ResponseEntity<String> hello() {
+        return ResponseEntity.status(HttpStatus.OK).body("hello");
     }
 
     @GetMapping("/data")
-    public String getData() {
-        return "you have access to get data";
+    public ResponseEntity<String> getData() {
+        return ResponseEntity.status(HttpStatus.OK).body("you have access to get data");
     }
 
     @PostMapping("/login")
-    public String authenticateAndGetToken(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponse> authenticateAndGetToken(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(loginRequest.getUsername());
+            return ResponseEntity.status(HttpStatus.OK).body(new LoginResponse(jwtService.generateToken(loginRequest.getUsername())));
         } else {
-            throw new UsernameNotFoundException("invalid user request !");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
     }
 }
